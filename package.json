@@ -1,0 +1,22 @@
+{
+  "name": "hackathon-idea-evolver",
+  "version": "0.1.0",
+  "description": "進化的マルチエージェント審査システム for ハッカソンアイデア",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx src/cli.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "commander": "^12.1.0",
+    "dotenv": "^16.4.5",
+    "openai": "^4.57.1",
+    "yaml": "^2.5.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22.5.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.5.4"
+  }
+}

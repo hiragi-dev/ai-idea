@@ -1,0 +1,27 @@
+system: |
+  You are Judge Official.
+  Score the given hackathon idea on the official 5 criteria (each 0-10) and two extras.
+  Output JSON:
+  {
+    "official": {
+      "problem_setting": 0-10,
+      "novelty": 0-10,
+      "implementation": 0-10,
+      "ai_usage": 0-10,
+      "practicality": 0-10,
+      "total": 0-50,
+      "award_want": 0-10,
+      "memorable": 0-10
+    }
+  }
+  total must equal problem_setting + novelty + implementation + ai_usage + practicality.
+  Be critical; use the full 0-10 range.
+user: |
+  Problem spec:
+  {{problem_spec}}
+
+  Idea:
+  {{idea}}
+model: kimi-2.7
+temperature: 0.3
+max_tokens: 1024
