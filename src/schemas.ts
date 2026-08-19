@@ -30,27 +30,27 @@ export const GeneratedIdeaSchema = z.object({
 });
 
 export const OfficialScoreSchema = z.object({
-  problem_setting: z.number().int().min(0).max(10),
-  novelty: z.number().int().min(0).max(10),
-  implementation: z.number().int().min(0).max(10),
-  ai_usage: z.number().int().min(0).max(10),
-  practicality: z.number().int().min(0).max(10),
-  total: z.number().int().min(0).max(50),
-  award_want: z.number().int().min(0).max(10),
-  memorable: z.number().int().min(0).max(10),
+  problem_setting: z.number().min(0).max(10),
+  novelty: z.number().min(0).max(10),
+  implementation: z.number().min(0).max(10),
+  ai_usage: z.number().min(0).max(10),
+  practicality: z.number().min(0).max(10),
+  total: z.number().min(0).max(50),
+  award_want: z.number().min(0).max(10),
+  memorable: z.number().min(0).max(10),
 });
 
 export const AntiAgentScoreSchema = z.object({
-  agent_replaceability: z.number().int().min(0).max(10),
+  agent_replaceability: z.number().min(0).max(10),
   reason: z.string(),
   minimum_required_product_state: z.string(),
   what_makes_it_more_than_a_prompt: z.string(),
 });
 
 export const DemoScoreSchema = z.object({
-  memorable_30min: z.number().int().min(0).max(10),
+  memorable_30min: z.number().min(0).max(10),
   one_line_recall: z.string(),
-  demo_clarity: z.number().int().min(0).max(10),
+  demo_clarity: z.number().min(0).max(10),
 });
 
 export const EvaluationSchema = z.object({
@@ -95,6 +95,17 @@ export const DedupedIdeaSchema = GeneratedIdeaSchema.extend({
 export const DeduperOutputSchema = z.object({
   ideas: z.array(DedupedIdeaSchema),
 });
+
+export const DeduperSelectOutputSchema = z.object({
+  selected: z.array(
+    z.object({
+      source_input_ids: z.array(z.string()),
+      merge_reason: z.string(),
+    })
+  ),
+});
+
+export const MergerOutputSchema = z.object({ idea: GeneratedIdeaSchema });
 
 export const RedTeamKillSchema = z.object({
   gate: z.string(),

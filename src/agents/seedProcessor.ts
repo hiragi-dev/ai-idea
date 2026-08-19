@@ -4,7 +4,8 @@ import { CONFIG } from '../config.js';
 import type { ProblemSpec, GeneratedIdea } from '../types.js';
 
 export async function processSeeds(
-  problem: ProblemSpec
+  problem: ProblemSpec,
+  progressKey?: string
 ): Promise<GeneratedIdea[]> {
   const seeds = problem.seed_ideas ?? [];
   if (seeds.length === 0) return [];
@@ -17,7 +18,8 @@ export async function processSeeds(
     const response = await callAgent(
       'seed_processor',
       { ...baseVars, seed },
-      SeedProcessorOutputSchema
+      SeedProcessorOutputSchema,
+      { progressKey }
     );
     return response.idea;
   });

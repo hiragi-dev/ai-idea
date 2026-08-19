@@ -1,4 +1,4 @@
-import { mkdir, readFile, writeFile, appendFile } from 'fs/promises';
+import { mkdir, readFile, writeFile, appendFile, readdir, rm } from 'fs/promises';
 import path from 'path';
 import type { Idea, Evaluation, ProblemSpec } from './types.js';
 
@@ -86,4 +86,63 @@ export async function writeRound(round: number, data: unknown): Promise<void> {
 export async function readRound(round: number): Promise<unknown> {
   const raw = await readFile(path.join(ROUNDS_DIR, `round_${round}.json`), 'utf-8');
   return JSON.parse(raw);
+}
+
+export async function listRoundNumbers(): Promise<number[]> {
+  try {
+    const files = await readdir(ROUNDS_DIR);
+    return files
+      .filter((f) => f.startsWith('round_') && f.endsWith('.json'))
+      .map((f) => parseInt(f.replace('round_', '').replace('.json', ''), 10))
+      .filter((n) => !Number.isNaN(n))
+      .sort((a, b) => a - b);
+  } catch {
+    return [];
+  }
+}
+
+export async function roundExists(round: number): Promise<boolean> {
+  try {
+    await readFile(path.join(ROUNDS_DIR, `round_${round}.json`), 'utf-8');
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export async function readIdeasByRound(
+  round: number,
+  createdBy?: string
+): Promise<Idea[]> {
+  const ideas = await readIdeas();
+  return ideas.filter(
+    (idea) => idea.round === round && (createdBy ? idea.created_by === createdBy : true)
+  );
+}
+
+export async function readIdeasByIds(ids: string[]): Promise<Idea[]> {
+  const ideaSet = new Set(ids);
+  const ideas = await readIdeas();
+  return ideas.filter((idea) => ideaSet.has(idea.id));
+}
+
+export async function attachEvaluations(ideas: Idea[]): Promise<void> {
+  const evaluations = await readEvaluations();
+  const map = new Map(evaluations.map((ev) => [ev.idea_id, ev]));
+  for (const idea of ideas) {
+    const evaluation = map.get(idea.id);
+    if (evaluation) idea.evaluations = evaluation;
+  }
+}
+
+export async function updateIdeasInState(updatedIdeas: Idea[]): Promise<void> {
+  const current = await readIdeas();
+  const map = new Map(updatedIdeas.map((idea) => [idea.id, idea]));
+  const merged = current.map((idea) => map.get(idea.id) ?? idea);
+  await writeIdeasJsonl(merged);
+}
+
+export async function clearState(): Promise<void> {
+  await rm(STATE_DIR, { recursive: true, force: true });
+  await ensureStateDir();
 }

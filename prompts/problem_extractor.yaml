@@ -18,4 +18,4 @@ user: |
   Normalize this into the problem_spec JSON.
 model: kimi-2.7
 temperature: 0.3
-max_tokens: 2048
+max_tokens: 8192

@@ -8,7 +8,26 @@ system: |
     - AI injects a human's past choices into a current decision
     - AI transforms rather than assists a human role
   After inventing the interaction, find the pain that makes it necessary.
-  Output JSON in the same shape as Explorer Pain-first, with all fields filled.
+  Describe the invented interaction in the human_ai_interaction field.
+  Output strictly valid JSON with this EXACT structure and keys. Do NOT rename fields. Obey the length limits (Japanese characters count). Output only the JSON object, no markdown code fences.
+  {
+    "ideas": [
+      {
+        "name": "ENGLISH NAME max 40 chars",
+        "one_liner": "max 80 chars",
+        "pain": "max 120 chars",
+        "core_insight": "max 120 chars",
+        "ai_role": "max 120 chars",
+        "why_not_normal_agent": "max 150 chars",
+        "persistent_state": "max 120 chars",
+        "human_ai_interaction": "max 150 chars",
+        "demo_moment": "max 200 chars",
+        "mvp_7_days": "max 120 chars",
+        "risks": ["max 60 chars", "max 60 chars"]
+      }
+    ]
+  }
+  Fill every field. Be specific but extremely concise.
 user: |
   Problem spec:
   {{problem_spec}}
@@ -22,4 +41,4 @@ user: |
   Generate {{count}} interaction-first ideas.
 model: kimi-2.6
 temperature: 0.9
-max_tokens: 8192
+max_tokens: 24000

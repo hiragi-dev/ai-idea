@@ -11,6 +11,8 @@
 - **変異（Strengthen / Invert / Escape）** による構造的アイデア進化
 - **Kill Gate** で「汎用Agentに1プロンプトで再現できる」案を即座に落とす
 - すべての中間状態を `state/` に保存し、人間が確認しながら進行可能
+- **進捗バー** で各 Agent の処理状況が可視化
+- **`--resume`** で途中から再開し、トークンを無駄にしない
 
 ### 入力ファイル
 
@@ -41,7 +43,7 @@ resources:
   duration_days: 7
   team_size: 3
   models:
-    - Kimi-K2.6
+    - preview/Kimi-K2.6
     - Kimi-K2.7
 ```
 
@@ -71,11 +73,29 @@ MODEL_KIMI_26=kimi-k2.6
 npx tsx src/cli.ts -i example_input.yaml
 ```
 
+進捗バーが各 Agent の処理状況を表示されます。
+
 ### 自動実行
 
 ```bash
 npx tsx src/cli.ts -i example_input.yaml --auto
 ```
+
+### 失敗時に再開
+
+```bash
+npx tsx src/cli.ts -i example_input.yaml --resume
+```
+
+`state/` にある完了済みラウンドを読み込み、途中から再開します。完了済みラウンドの API コールは skip されるので、トークンを使いすぎません。
+
+### 最初からやり直す
+
+```bash
+npx tsx src/cli.ts -i example_input.yaml --reset
+```
+
+`state/` を削除して新規実行します。
 
 ### Dry run（入力パース確認のみ）
 
@@ -99,12 +119,14 @@ src/
 ├── cli.ts
 ├── config.ts
 ├── llm.ts
+├── progress.ts
 ├── schemas.ts
 ├── state.ts
 ├── types.ts
 ├── agents/
 │   ├── problemExtractor.ts
 │   ├── explorers.ts
+│   ├── seedProcessor.ts
 │   ├── deduper.ts
 │   ├── judges.ts
 │   ├── redTeam.ts

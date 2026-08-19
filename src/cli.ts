@@ -12,6 +12,8 @@ program
   .version('0.1.0')
   .requiredOption('-i, --input <file>', '入力YAML/JSONファイル')
   .option('-a, --auto', '全ラウンドを自動で進行する', false)
+  .option('--resume', 'state/ の既存進捗から再開する', false)
+  .option('--reset', 'state/ を削除して最初から実行する', false)
   .option('--dry-run', '入力のパース確認のみ行い、APIは呼ばない')
   .action(async (options) => {
     await ensureStateDir();
@@ -28,7 +30,11 @@ program
     }
 
     console.log('Starting idea evolution...');
-    const { finalIdeas } = await runEvolution(inputText, { auto: options.auto });
+    const { finalIdeas } = await runEvolution(inputText, {
+      auto: options.auto,
+      resume: options.resume,
+      reset: options.reset,
+    });
 
     console.log('\n🏆 Final ideas:');
     for (const idea of finalIdeas) {

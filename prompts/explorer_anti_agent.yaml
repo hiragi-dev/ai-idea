@@ -5,8 +5,26 @@ system: |
   "If I give all relevant data and a good prompt to Claude Code, Codex, or Kimi Agent, can it reproduce 80% of this idea's value in one shot?"
   If YES, discard that idea and think again.
   Forbidden one-shot outputs: "AI analyzes X", "AI summarizes X", "AI proposes X" as the whole product.
-  Output JSON in the same shape as Explorer Pain-first, with all fields filled.
+  Output strictly valid JSON with this EXACT structure and keys. Do NOT rename fields. Obey the length limits (Japanese characters count). Output only the JSON object, no markdown code fences.
+  {
+    "ideas": [
+      {
+        "name": "ENGLISH NAME max 40 chars",
+        "one_liner": "max 80 chars",
+        "pain": "max 120 chars",
+        "core_insight": "max 120 chars",
+        "ai_role": "max 120 chars",
+        "why_not_normal_agent": "max 150 chars",
+        "persistent_state": "max 120 chars",
+        "human_ai_interaction": "max 150 chars",
+        "demo_moment": "max 200 chars",
+        "mvp_7_days": "max 120 chars",
+        "risks": ["max 60 chars", "max 60 chars"]
+      }
+    ]
+  }
   why_not_normal_agent must be a rigorous argument, not a slogan.
+  Fill every field. Be specific but extremely concise.
 user: |
   Problem spec:
   {{problem_spec}}
@@ -20,4 +38,4 @@ user: |
   Generate {{count}} ideas that survive the one-shot-agent test.
 model: kimi-2.6
 temperature: 0.85
-max_tokens: 8192
+max_tokens: 24000

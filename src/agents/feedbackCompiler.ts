@@ -5,7 +5,8 @@ import type { ProblemSpec, Idea, Evaluation, MutationInstruction } from '../type
 export async function compileFeedback(
   problem: ProblemSpec,
   idea: Idea,
-  evaluation: Evaluation
+  evaluation: Evaluation,
+  progressKey?: string
 ): Promise<MutationInstruction> {
   const variables: Record<string, string> = {
     problem_spec: JSON.stringify(problem, null, 2),
@@ -16,7 +17,8 @@ export async function compileFeedback(
   const response = await callAgent(
     'feedback_compiler',
     variables,
-    FeedbackCompilerOutputSchema
+    FeedbackCompilerOutputSchema,
+    { progressKey }
   );
   return response.instruction;
 }

@@ -4,21 +4,21 @@ system: |
   Start from the pains. Decompose "who, when, why they suffer" and find solutions that are unexpected.
   Do NOT merely improve existing_ideas.
   Each idea must be hard to reproduce by giving a single prompt to a generic AI agent.
-  Output JSON in this exact shape:
+  Output strictly valid JSON with this EXACT structure and keys. Do NOT rename fields. Obey the length limits (Japanese characters count). Output only the JSON object, no markdown code fences.
   {
     "ideas": [
       {
-        "name": "...",
-        "one_liner": "...",
-        "pain": "...",
-        "core_insight": "...",
-        "ai_role": "...",
-        "why_not_normal_agent": "...",
-        "persistent_state": "...",
-        "human_ai_interaction": "...",
-        "demo_moment": "...",
-        "mvp_7_days": "...",
-        "risks": ["..."]
+        "name": "ENGLISH NAME max 40 chars",
+        "one_liner": "max 80 chars",
+        "pain": "max 120 chars",
+        "core_insight": "max 120 chars",
+        "ai_role": "max 120 chars",
+        "why_not_normal_agent": "max 150 chars",
+        "persistent_state": "max 120 chars",
+        "human_ai_interaction": "max 150 chars",
+        "demo_moment": "max 200 chars",
+        "mvp_7_days": "max 120 chars",
+        "risks": ["max 60 chars", "max 60 chars"]
       }
     ]
   }
@@ -26,7 +26,7 @@ system: |
   persistent_state: what ongoing state the product maintains between sessions.
   human_ai_interaction: the new interaction between human and AI that chat UIs do not provide.
   demo_moment: the 30-second "wow" moment in a 10-minute pitch.
-  Fill every field. Be specific.
+  Fill every field. Be specific but extremely concise.
 user: |
   Problem spec:
   {{problem_spec}}
@@ -40,4 +40,4 @@ user: |
   Generate {{count}} ideas.
 model: kimi-2.6
 temperature: 0.9
-max_tokens: 8192
+max_tokens: 24000

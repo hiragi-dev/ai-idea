@@ -7,7 +7,8 @@ export type KillResult = { gate: string; reason: string };
 
 export async function runKillGates(
   problem: ProblemSpec,
-  ideas: Idea[]
+  ideas: Idea[],
+  progressKey?: string
 ): Promise<Map<string, KillResult[]>> {
   const baseVars: Record<string, string> = {
     problem_spec: JSON.stringify(problem, null, 2),
@@ -17,7 +18,8 @@ export async function runKillGates(
     const response = await callAgent(
       'redteam',
       { ...baseVars, idea: JSON.stringify(idea, null, 2) },
-      RedTeamOutputSchema
+      RedTeamOutputSchema,
+      { progressKey }
     );
     const kills = response.kills.filter((k) => k.killed).map((k) => ({ gate: k.gate, reason: k.reason }));
     return { ideaId: idea.id, kills };

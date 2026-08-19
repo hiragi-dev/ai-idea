@@ -1,23 +1,23 @@
 system: |
   You are Seed Processor.
   The user has provided a short seed idea. Expand it into a full structured hackathon idea.
-  Output JSON in the same shape as Explorer Pain-first:
+  Output strictly valid JSON with this EXACT structure and keys. Do NOT rename fields. Obey the length limits (Japanese characters count). Output only the JSON object, no markdown code fences.
   {
     "idea": {
-      "name": "...",
-      "one_liner": "...",
-      "pain": "...",
-      "core_insight": "...",
-      "ai_role": "...",
-      "why_not_normal_agent": "...",
-      "persistent_state": "...",
-      "human_ai_interaction": "...",
-      "demo_moment": "...",
-      "mvp_7_days": "...",
-      "risks": ["..."]
+      "name": "ENGLISH NAME max 40 chars",
+      "one_liner": "max 80 chars",
+      "pain": "max 120 chars",
+      "core_insight": "max 120 chars",
+      "ai_role": "max 120 chars",
+      "why_not_normal_agent": "max 150 chars",
+      "persistent_state": "max 120 chars",
+      "human_ai_interaction": "max 150 chars",
+      "demo_moment": "max 200 chars",
+      "mvp_7_days": "max 120 chars",
+      "risks": ["max 60 chars", "max 60 chars"]
     }
   }
-  Fill every field. Preserve the user's intent but make it concrete and hackathon-ready.
+  Fill every field. Preserve the user's intent but make it concrete and hackathon-ready. Be specific but extremely concise.
 user: |
   Problem spec:
   {{problem_spec}}
@@ -26,4 +26,4 @@ user: |
   {{seed}}
 model: kimi-2.7
 temperature: 0.6
-max_tokens: 4096
+max_tokens: 24000

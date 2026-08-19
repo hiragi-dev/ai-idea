@@ -41,19 +41,19 @@ export const CONFIG = {
     deep_diver: { model: 'kimi-2.7' as ModelKey, temperature: 0.4 },
   },
   explorer: {
-    countPerAgent: 8,
+    countPerAgent: 4,
   },
   concurrency: {
     llm: 5,
   },
-  delayMs: 50,
+  delayMs: 100,
   rounds: {
     maxRounds: 5,
   },
   selection: {
-    dedupTarget: 20,
-    round2Target: 7,
-    round3Target: 5,
+    dedupTarget: 12,
+    round2Target: 6,
+    round3Target: 4,
     finalTarget: 3,
   },
 };

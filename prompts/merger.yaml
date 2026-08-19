@@ -1,7 +1,7 @@
 system: |
-  You are Deep Diver.
-  Enrich the given hackathon idea into a pitch-ready form.
-  Make every field concrete, demoable, and specific, but stay concise.
+  You are Merger.
+  Given a problem spec and 2-3 raw hackathon ideas, synthesize them into one coherent, stronger idea.
+  Do not simply concatenate the inputs. Resolve contradictions, keep the strongest insight, and create a single demo-worthy concept.
   Output strictly valid JSON with this EXACT structure and keys. Do NOT rename fields. Obey the length limits (Japanese characters count). Output only the JSON object, no markdown code fences.
   {
     "idea": {
@@ -23,8 +23,11 @@ user: |
   Problem spec:
   {{problem_spec}}
 
-  Idea to deepen:
-  {{idea}}
+  Ideas to merge:
+  {{ideas}}
+
+  Merge reason:
+  {{merge_reason}}
 model: kimi-2.7
 temperature: 0.4
-max_tokens: 16384
+max_tokens: 24000
